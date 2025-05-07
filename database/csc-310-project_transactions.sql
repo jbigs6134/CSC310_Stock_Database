@@ -10,8 +10,8 @@ CREATE TABLE transactions (
   Price DECIMAL(10,2) NOT NULL,
   Transaction_Type TEXT CHECK(Transaction_Type IN ('Buy', 'Sell')) NOT NULL,
   Transaction_Date TIMESTAMP DEFAULT NULL,
-  FOREIGN KEY (User_ID) REFERENCES users (user_id),
-  FOREIGN KEY (Ticker_Name) REFERENCES stocks (ticker_name)
+  FOREIGN KEY (User_ID) REFERENCES users (User_ID),
+  FOREIGN KEY (Ticker_Name) REFERENCES stocks (Ticker_Name)
 );
 
 -- Dumping data for table `transactions`

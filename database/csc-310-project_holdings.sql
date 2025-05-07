@@ -10,12 +10,11 @@ CREATE TABLE holdings (
   Price DECIMAL(10, 2) NOT NULL,
   Quantity DECIMAL(15, 4) NOT NULL,
   Ticker_Name TEXT,
-  FOREIGN KEY (User_ID) REFERENCES users (User_ID),
-  FOREIGN KEY (Ticker_Name) REFERENCES stocks (Ticker_Name)
+  FOREIGN KEY (User_ID) REFERENCES users (User_ID) ON DELETE CASCADE,
+  FOREIGN KEY (Ticker_Name) REFERENCES stocks (Ticker_Name) ON DELETE CASCADE,
+  UNIQUE(User_ID, Ticker_Name)
 );
 
--- Ensure foreign keys are enabled in SQLite
-PRAGMA foreign_keys = ON;
 
 -- Example insert statement (adjust as necessary)
 -- INSERT INTO holdings (User_ID, Date_bought, Price_bought, Price, Quantity, Ticker_Name)
