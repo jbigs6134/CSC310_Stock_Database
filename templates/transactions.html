@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Your Transactions</h1>
+
+    <table class="table table-striped table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Transaction ID</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+                <tr class="{{ 'table-success' if transaction['Transaction_Type'] == 'Buy' else 'table-danger' }}">
+                    <th scope="row">{{ transaction['Transaction_ID'] }}</th>
+                    <td>{{ transaction['Ticker_Name'] }}</td>
+                    <td>{{ transaction['Quantity'] }}</td>
+                    <td>{{ transaction['Price'] }}</td>
+                    <td>{{ transaction['Transaction_Type'] }}</td>
+                    <td>{{ transaction['Transaction_Date'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

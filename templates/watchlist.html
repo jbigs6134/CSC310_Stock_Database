@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="header-container">
+        <h1>Watchlist</h1>
+        <div class="search-bar">
+ <div style="font-weight: bold; font-size: 1.2em;">
+ Money: ${{ "%.2f" | format(money | float) }}
+ </div>
+            <label for="watchlistSearch">Search for Watchlist:</label>
+            <input type="text" id="watchlistSearch" onkeyup="searchWatchlist()" placeholder="Search for tickers..">
+        </div>
+    </div>
+
+    <table class="table table-bordered" id="watchlistTable" style="width: 100%; margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Company Name</th>
+                <th>Price</th>
+                <th>Sector</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in watchlist %}
+            <tr>
+                <td>{{ item.Ticker_Name }}</td>
+                <td>{{item.Full_Name}}</td>
+                <td>{{item.Price}}</td>
+                <td>{{item.Sector}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function searchWatchlist() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("watchlistSearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("watchlistTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+{% endblock %}

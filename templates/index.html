@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 style ="text-align: center;">{% block title %} Stocks Watcher Login {% endblock %}</h1>
+    <br>
+    <br>
+    <div style="display: grid; justify-content: center;">
+        <button onclick="window.location.href='/stocks'">View Stocks</button>
+        <br>
+        <button onclick="window.location.href='/login'">Login</button>
+        <br>
+        <button onclick="window.location.href='/register'">Register</button>
+    </div>
+{% endblock %}

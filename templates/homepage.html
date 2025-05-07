@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between;">
+    <div style="text-align: left; display: flex; flex-direction: column;">
+        <div>
+            Username: {{ username }}
+        </div>
+        <div style="font-weight: bold; font-size: 1.2em;">
+ Money: ${{ "%.2f" | format(money | float) }}
+        </div>
+       
+            <a href="/logout"><button>Logout</button></a>
+        
+            
+    
+    </div>
+    <div>
+        <a href="/stocks">
+        <button>Stocks</button>
+        </a>
+    </div>
+   <div style="text-align: center;">
+       <div id="holdings-list"></div>
+       <a href="/holdings">
+        <button>Holdings</button>
+       </a>
+   </div>
+    <div style="text-align: right;">
+        <a href="/watchlist"><button>Watchlist</button></a>
+    </div>
+    <div style="text-align: right;">
+        <a href="/transactions">
+            <button>Transactions</button></a>
+    </div>
+</div>
+{% endblock %}

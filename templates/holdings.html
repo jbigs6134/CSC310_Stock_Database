@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Holdings{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Holdings</h1>
+ <div style="font-weight: bold; font-size: 1.2em;">
+ Money: ${{ "%.2f" | format(money | float) }}
+ </div>
+    <div class="header-container">
+        <div class="search-bar">
+            <label for="holdingsSearch">Search for Holdings:</label>
+            <input type="text" id="holdingsSearch" onkeyup="searchHoldings()" placeholder="Search for tickers..">
+        </div>    
+    <table class="table table-bordered" id="holdingsTable" style="width: 100%; margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for holding in holdings %}
+            <tr id="holding-{{ holding.Ticker_Name }}">
+              <td>{{ holding.Full_Name }}</td>
+              <td>${{ holding.Price }}</td>
+              <td id="quantity-{{ holding.Ticker_Name }}">{{ holding.quantity }}</td>
+              <td>
+                <form action="{{ url_for('sell_stock') }}" method="POST">
+                  <input type="hidden" name="Ticker_Name" value="{{ holding.Ticker_Name }}">
+                  <button type="submit" class="btn btn-danger btn-remove" data-ticker="{{ holding.Ticker_Name }}">Sell</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function searchHoldings() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("holdingsSearch");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("holdingsTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+const removeButtons = document.querySelectorAll('.btn-remove');
+removeButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+        event.preventDefault(); 
+        this.closest('form').submit();
+    });
+});
+</script>
+{% endblock %}
