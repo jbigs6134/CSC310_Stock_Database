@@ -13,6 +13,10 @@ from helper_files.transactions import get_transactions, add_transaction
 from helper_files.stocks import get_stocks_from_db
 from json_requests import get_stock_data_batch
 
+import logging
+# ... other imports ...
+logging.basicConfig(level=logging.DEBUG)
+
 app = Flask(__name__)
 
 app.config['SCHEDULER_API_ENABLED'] = True
@@ -167,11 +171,14 @@ def is_stock_in_watchlist(stock_symbol):
 def transactions():
     user = get_user_by_username(main_username)
     user_id = user['User_ID']
+
     money = user['Money'] if user else 0
+    logging.debug(f"Attempting to fetch transactions for User_ID: {user_id}")
     try:
         user_transactions = get_transactions(user_id)
+        logging.debug(f"Transactions fetched: {user_transactions}") # Prints the transaction list
     except Exception as e:
-        print(f"Error fetching transactions: {e}")
+        logging.error(f"Error fetching transactions for User_ID {user_id}: {e}")
         user_transactions = []
     return render_template('transactions.html', transactions=user_transactions, money=money)
 

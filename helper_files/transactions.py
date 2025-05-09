@@ -1,4 +1,5 @@
 from .connection import get_db_connection
+import sqlite3
 
 def add_transaction(user_id, ticker_name, quantity, price, transaction_type, conn):
     cursor = conn.cursor()
@@ -20,7 +21,7 @@ def get_transactions(user_id):
 
         cursor.execute('''SELECT * FROM transactions WHERE User_ID = ?''', (user_id,))
         transactions = cursor.fetchall()
-
+        
         return transactions
 
     except sqlite3.Error as e:
